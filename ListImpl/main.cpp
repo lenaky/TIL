@@ -1,17 +1,20 @@
 #include "SimpleList.h"
+#include <iostream>
 #include <list>
 
-#define IMAGE_SIZE 1920 * 1080
+#define WIDTH  1920
+#define HEIGHT 1080
+
 struct RGB
 {
-	char r;
-	char g;
-	char b;
+	char r=55;
+	char g=55;
+	char b=55;
 };
 
 struct RGBImage
 {
-	RGBImage(int w, int h) : _w(w), _h(h) { 
+	explicit RGBImage(int w, int h) : _w(w), _h(h) { 
 		_rgb_array = new RGB[ _w * _h ];
 	}
 	~RGBImage()	{
@@ -32,9 +35,18 @@ struct RGBImage
 		return *this;
 	}
 
+	operator void* () {
+		return reinterpret_cast<void*>(_rgb_array);
+	}
+
 	void SetImage( void* image )
 	{
 		memcpy( _rgb_array, image, _w * _h * 3 );
+	}
+
+	size_t GetSize() const 
+	{
+		return _w * _h * sizeof(RGB);
 	}
 	
 	RGB* _rgb_array = nullptr;
@@ -44,5 +56,51 @@ struct RGBImage
 
 int main()
 {
+	RGBImage rgb(WIDTH, HEIGHT);
+	RGBImage out_rgb(WIDTH, HEIGHT);
+
+	TestLibs::List lst(WIDTH * HEIGHT * 3, 10); // 100개짜리 heap array 만들기.
+
+	std::cout << std::boolalpha << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Pop(out_rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
+	std::cout << lst.Push(rgb) << std::endl;
 	return 0;
 }
