@@ -20,7 +20,7 @@ namespace TestLibs
 		{
 			if( nullptr != _buffer )
 			{
-				for (int i = 0; i < _handling_count; i++)
+				for (size_t i = 0; i < _handling_count; i++)
 					delete _buffer[i];
 				delete[] _buffer;
 			}
@@ -37,9 +37,6 @@ namespace TestLibs
 				return false;
 			}
 			memcpy(_buffer[_insert_index], value, _item_size);
-
-			std::cout << "Pushed data. at index[" << _insert_index << "]" << std::endl;
-
 			_insert_index = (_insert_index + 1) % _handling_count;
 			if (-1 == _pop_index)
 				_pop_index = 0;
@@ -74,7 +71,7 @@ namespace TestLibs
 			}
 
 			_buffer = new char* [_handling_count];
-			for (int i = 0; i < _handling_count; i++)
+			for (size_t i = 0; i < _handling_count; i++)
 			{
 				_buffer[i] = new char[_item_size];
 			}
